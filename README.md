@@ -1,4 +1,4 @@
-# AbstractCellularAutomaton
+# Harrison's Abstract Cellular Automaton Program
 An abstract cellular automaton program I wrote recently with a heavy emphasis on lambda programming and recursive algorithms to provide an easily extendable simulation. Uses a custom inheritance of a System.Windows.Forms.DataVisualization chart for visualization of the cellular automaton. Capable of simulating Conway's Game of Life as well as many other pre-defined or random algorithms.
 
 ## Compiling
