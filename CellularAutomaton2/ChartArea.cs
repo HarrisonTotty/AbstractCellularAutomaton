@@ -26,6 +26,8 @@ namespace CellularAutomaton
             this.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.False;
             this.AxisX.LabelStyle.Enabled = false;
             this.AxisY.LabelStyle.Enabled = false;
+            this.AxisX.LabelStyle.Format = "n1";
+            this.AxisY.LabelStyle.Format = "n1";
             this.AxisX.IsMarginVisible = false;
             this.AxisY.IsMarginVisible = false;
             this.AxisX.MajorGrid.Enabled = true;

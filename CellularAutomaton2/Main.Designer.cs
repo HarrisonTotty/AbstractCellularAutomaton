@@ -64,6 +64,9 @@
             this.toolStripMenuItem14 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem15 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem16 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem17 = new System.Windows.Forms.ToolStripMenuItem();
+            this.Simulation_GR1DCA = new System.Windows.Forms.ToolStripMenuItem();
+            this.Simulation_GR1DCA_Value = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.Simulation_Buffer = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Options = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,11 +79,19 @@
             this.Options_RandOverflow = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.Options_RandRadius = new System.Windows.Forms.ToolStripMenuItem();
+            this.Options_RandE1DRules = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.Options_RestartOnFlatline = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Grid = new System.Windows.Forms.ToolStripMenuItem();
             this.Grid_HD = new System.Windows.Forms.ToolStripMenuItem();
             this.Grid_PM = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.Grid_BrushSize = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem23 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem18 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem19 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem20 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem21 = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Seperator = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Seeding = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Rules = new System.Windows.Forms.ToolStripMenuItem();
@@ -96,14 +107,6 @@
             this.Tab_Info = new System.Windows.Forms.TabPage();
             this.AutomatonPG = new System.Windows.Forms.PropertyGrid();
             this.Tab_Statistics = new System.Windows.Forms.TabPage();
-            this.toolStripMenuItem17 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.Grid_BrushSize = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem18 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem19 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem20 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem21 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem23 = new System.Windows.Forms.ToolStripMenuItem();
             this.StatBox = new System.Windows.Forms.TextBox();
             this.MainMenu.SuspendLayout();
             this.Tabs.SuspendLayout();
@@ -156,12 +159,14 @@
             this.File_Open.Name = "File_Open";
             this.File_Open.Size = new System.Drawing.Size(152, 22);
             this.File_Open.Text = "Open";
+            this.File_Open.Click += new System.EventHandler(this.File_Open_Click);
             // 
             // File_Save
             // 
             this.File_Save.Name = "File_Save";
             this.File_Save.Size = new System.Drawing.Size(152, 22);
             this.File_Save.Text = "Save";
+            this.File_Save.Click += new System.EventHandler(this.File_Save_Click);
             // 
             // toolStripSeparator3
             // 
@@ -190,6 +195,7 @@
             this.Simulation_UpdateInterval,
             this.Simulation_Size,
             this.Simulation_GNSR,
+            this.Simulation_GR1DCA,
             this.toolStripSeparator5,
             this.Simulation_Buffer});
             this.Menu_Simulation.Name = "Menu_Simulation";
@@ -199,26 +205,26 @@
             // Simulation_RandomizeAlgorithms
             // 
             this.Simulation_RandomizeAlgorithms.Name = "Simulation_RandomizeAlgorithms";
-            this.Simulation_RandomizeAlgorithms.Size = new System.Drawing.Size(237, 22);
+            this.Simulation_RandomizeAlgorithms.Size = new System.Drawing.Size(278, 22);
             this.Simulation_RandomizeAlgorithms.Text = "Randomize Algorithms";
             this.Simulation_RandomizeAlgorithms.Click += new System.EventHandler(this.Simulation_RandomizeAlgorithms_Click);
             // 
             // Simulation_Seed
             // 
             this.Simulation_Seed.Name = "Simulation_Seed";
-            this.Simulation_Seed.Size = new System.Drawing.Size(237, 22);
+            this.Simulation_Seed.Size = new System.Drawing.Size(278, 22);
             this.Simulation_Seed.Text = "Seed";
             this.Simulation_Seed.Click += new System.EventHandler(this.Simulation_Seed_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(234, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(275, 6);
             // 
             // Simulation_Start
             // 
             this.Simulation_Start.Name = "Simulation_Start";
-            this.Simulation_Start.Size = new System.Drawing.Size(237, 22);
+            this.Simulation_Start.Size = new System.Drawing.Size(278, 22);
             this.Simulation_Start.Text = "Start (S)";
             this.Simulation_Start.Click += new System.EventHandler(this.Simulation_Start_Click);
             // 
@@ -226,7 +232,7 @@
             // 
             this.Simulation_Resume.Enabled = false;
             this.Simulation_Resume.Name = "Simulation_Resume";
-            this.Simulation_Resume.Size = new System.Drawing.Size(237, 22);
+            this.Simulation_Resume.Size = new System.Drawing.Size(278, 22);
             this.Simulation_Resume.Text = "Resume (Space)";
             this.Simulation_Resume.Click += new System.EventHandler(this.Simulation_Resume_Click);
             // 
@@ -234,14 +240,14 @@
             // 
             this.Simulation_Pause.Enabled = false;
             this.Simulation_Pause.Name = "Simulation_Pause";
-            this.Simulation_Pause.Size = new System.Drawing.Size(237, 22);
+            this.Simulation_Pause.Size = new System.Drawing.Size(278, 22);
             this.Simulation_Pause.Text = "Pause (Space)";
             this.Simulation_Pause.Click += new System.EventHandler(this.Simulation_Pause_Click);
             // 
             // Simulation_Restart
             // 
             this.Simulation_Restart.Name = "Simulation_Restart";
-            this.Simulation_Restart.Size = new System.Drawing.Size(237, 22);
+            this.Simulation_Restart.Size = new System.Drawing.Size(278, 22);
             this.Simulation_Restart.Text = "Restart (R)";
             this.Simulation_Restart.Click += new System.EventHandler(this.Simulation_Restart_Click);
             // 
@@ -249,14 +255,14 @@
             // 
             this.Simulation_Stop.Enabled = false;
             this.Simulation_Stop.Name = "Simulation_Stop";
-            this.Simulation_Stop.Size = new System.Drawing.Size(237, 22);
+            this.Simulation_Stop.Size = new System.Drawing.Size(278, 22);
             this.Simulation_Stop.Text = "Stop (S)";
             this.Simulation_Stop.Click += new System.EventHandler(this.Simulation_Stop_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(234, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(275, 6);
             // 
             // Simulation_UpdateInterval
             // 
@@ -267,7 +273,7 @@
             this.toolStripMenuItem5,
             this.toolStripMenuItem6});
             this.Simulation_UpdateInterval.Name = "Simulation_UpdateInterval";
-            this.Simulation_UpdateInterval.Size = new System.Drawing.Size(237, 22);
+            this.Simulation_UpdateInterval.Size = new System.Drawing.Size(278, 22);
             this.Simulation_UpdateInterval.Text = "Update Interval (ms)";
             this.Simulation_UpdateInterval.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.Simulation_UpdateInterval_DropDownItemClicked);
             // 
@@ -314,7 +320,7 @@
             this.toolStripMenuItem9,
             this.toolStripMenuItem10});
             this.Simulation_Size.Name = "Simulation_Size";
-            this.Simulation_Size.Size = new System.Drawing.Size(237, 22);
+            this.Simulation_Size.Size = new System.Drawing.Size(278, 22);
             this.Simulation_Size.Text = "Size (N x N)";
             this.Simulation_Size.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.Simulation_Size_DropDownItemClicked);
             // 
@@ -365,7 +371,7 @@
             this.toolStripMenuItem16,
             this.toolStripMenuItem17});
             this.Simulation_GNSR.Name = "Simulation_GNSR";
-            this.Simulation_GNSR.Size = new System.Drawing.Size(237, 22);
+            this.Simulation_GNSR.Size = new System.Drawing.Size(278, 22);
             this.Simulation_GNSR.Text = "Global Neighbor Search Radius";
             this.Simulation_GNSR.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.Simulation_GNSR_DropDownItemClicked);
             // 
@@ -374,36 +380,59 @@
             this.toolStripMenuItem13.Checked = true;
             this.toolStripMenuItem13.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolStripMenuItem13.Name = "toolStripMenuItem13";
-            this.toolStripMenuItem13.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem13.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem13.Text = "1";
             // 
             // toolStripMenuItem14
             // 
             this.toolStripMenuItem14.Name = "toolStripMenuItem14";
-            this.toolStripMenuItem14.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem14.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem14.Text = "2";
             // 
             // toolStripMenuItem15
             // 
             this.toolStripMenuItem15.Name = "toolStripMenuItem15";
-            this.toolStripMenuItem15.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem15.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem15.Text = "3";
             // 
             // toolStripMenuItem16
             // 
             this.toolStripMenuItem16.Name = "toolStripMenuItem16";
-            this.toolStripMenuItem16.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem16.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem16.Text = "4";
+            // 
+            // toolStripMenuItem17
+            // 
+            this.toolStripMenuItem17.Name = "toolStripMenuItem17";
+            this.toolStripMenuItem17.Size = new System.Drawing.Size(80, 22);
+            this.toolStripMenuItem17.Text = "6";
+            // 
+            // Simulation_GR1DCA
+            // 
+            this.Simulation_GR1DCA.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Simulation_GR1DCA_Value});
+            this.Simulation_GR1DCA.Name = "Simulation_GR1DCA";
+            this.Simulation_GR1DCA.Size = new System.Drawing.Size(278, 22);
+            this.Simulation_GR1DCA.Text = "Global Rule For 1D Cellular Automaton";
+            // 
+            // Simulation_GR1DCA_Value
+            // 
+            this.Simulation_GR1DCA_Value.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Simulation_GR1DCA_Value.Name = "Simulation_GR1DCA_Value";
+            this.Simulation_GR1DCA_Value.Size = new System.Drawing.Size(100, 23);
+            this.Simulation_GR1DCA_Value.Text = "30";
+            this.Simulation_GR1DCA_Value.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Simulation_GR1DCA_Value_KeyDown);
+            this.Simulation_GR1DCA_Value.Click += new System.EventHandler(this.Simulation_GR1DCA_Value_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(234, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(275, 6);
             // 
             // Simulation_Buffer
             // 
             this.Simulation_Buffer.Name = "Simulation_Buffer";
-            this.Simulation_Buffer.Size = new System.Drawing.Size(237, 22);
+            this.Simulation_Buffer.Size = new System.Drawing.Size(278, 22);
             this.Simulation_Buffer.Text = "Buffer Simulation...";
             this.Simulation_Buffer.Click += new System.EventHandler(this.Simulation_Buffer_Click);
             // 
@@ -419,6 +448,7 @@
             this.Options_RandOverflow,
             this.toolStripSeparator2,
             this.Options_RandRadius,
+            this.Options_RandE1DRules,
             this.toolStripSeparator7,
             this.Options_RestartOnFlatline});
             this.Menu_Options.Name = "Menu_Options";
@@ -428,71 +458,78 @@
             // Options_RandAll
             // 
             this.Options_RandAll.Name = "Options_RandAll";
-            this.Options_RandAll.Size = new System.Drawing.Size(335, 22);
+            this.Options_RandAll.Size = new System.Drawing.Size(337, 22);
             this.Options_RandAll.Text = "Randomize all algorithms on start";
             this.Options_RandAll.Click += new System.EventHandler(this.Options_RandAll_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(332, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(334, 6);
             // 
             // Options_RandSeed
             // 
             this.Options_RandSeed.Name = "Options_RandSeed";
-            this.Options_RandSeed.Size = new System.Drawing.Size(335, 22);
+            this.Options_RandSeed.Size = new System.Drawing.Size(337, 22);
             this.Options_RandSeed.Text = "Randomize seed algorithm on start";
             this.Options_RandSeed.Click += new System.EventHandler(this.Options_RandAlgs_Click);
             // 
             // Options_RandRules
             // 
             this.Options_RandRules.Name = "Options_RandRules";
-            this.Options_RandRules.Size = new System.Drawing.Size(335, 22);
+            this.Options_RandRules.Size = new System.Drawing.Size(337, 22);
             this.Options_RandRules.Text = "Randomize simulation rules on start";
             this.Options_RandRules.Click += new System.EventHandler(this.Options_RandRules_Click);
             // 
             // Options_RandRS
             // 
             this.Options_RandRS.Name = "Options_RandRS";
-            this.Options_RandRS.Size = new System.Drawing.Size(335, 22);
+            this.Options_RandRS.Size = new System.Drawing.Size(337, 22);
             this.Options_RandRS.Text = "Randomize rule selection algorithm on start";
             this.Options_RandRS.Click += new System.EventHandler(this.Options_RandRS_Click);
             // 
             // Options_RandNeighbor
             // 
             this.Options_RandNeighbor.Name = "Options_RandNeighbor";
-            this.Options_RandNeighbor.Size = new System.Drawing.Size(335, 22);
+            this.Options_RandNeighbor.Size = new System.Drawing.Size(337, 22);
             this.Options_RandNeighbor.Text = "Randomize neighbor algorithm on start";
             this.Options_RandNeighbor.Click += new System.EventHandler(this.Options_RandNeighbor_Click);
             // 
             // Options_RandOverflow
             // 
             this.Options_RandOverflow.Name = "Options_RandOverflow";
-            this.Options_RandOverflow.Size = new System.Drawing.Size(335, 22);
+            this.Options_RandOverflow.Size = new System.Drawing.Size(337, 22);
             this.Options_RandOverflow.Text = "Randomize overflow algorithm on start";
             this.Options_RandOverflow.Click += new System.EventHandler(this.Options_RandOverflow_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(332, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(334, 6);
             // 
             // Options_RandRadius
             // 
             this.Options_RandRadius.Name = "Options_RandRadius";
-            this.Options_RandRadius.Size = new System.Drawing.Size(335, 22);
+            this.Options_RandRadius.Size = new System.Drawing.Size(337, 22);
             this.Options_RandRadius.Text = "Randomize global neighbor search radius on start";
             this.Options_RandRadius.Click += new System.EventHandler(this.Options_RandRadius_Click);
+            // 
+            // Options_RandE1DRules
+            // 
+            this.Options_RandE1DRules.Name = "Options_RandE1DRules";
+            this.Options_RandE1DRules.Size = new System.Drawing.Size(337, 22);
+            this.Options_RandE1DRules.Text = "Randomize global ruleset for 1D cellular automata";
+            this.Options_RandE1DRules.Click += new System.EventHandler(this.Options_RandE1DRules_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(332, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(334, 6);
             // 
             // Options_RestartOnFlatline
             // 
             this.Options_RestartOnFlatline.Name = "Options_RestartOnFlatline";
-            this.Options_RestartOnFlatline.Size = new System.Drawing.Size(335, 22);
+            this.Options_RestartOnFlatline.Size = new System.Drawing.Size(337, 22);
             this.Options_RestartOnFlatline.Text = "Restart simulation on flatline";
             this.Options_RestartOnFlatline.ToolTipText = "Restarts the simulation if no cells change states within 4 generations";
             this.Options_RestartOnFlatline.Click += new System.EventHandler(this.Options_RestartOnFlatline_Click);
@@ -522,6 +559,56 @@
             this.Grid_PM.Text = "Point Mode";
             this.Grid_PM.Click += new System.EventHandler(this.Grid_PM_Click);
             // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(152, 6);
+            // 
+            // Grid_BrushSize
+            // 
+            this.Grid_BrushSize.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem23,
+            this.toolStripMenuItem18,
+            this.toolStripMenuItem19,
+            this.toolStripMenuItem20,
+            this.toolStripMenuItem21});
+            this.Grid_BrushSize.Name = "Grid_BrushSize";
+            this.Grid_BrushSize.Size = new System.Drawing.Size(155, 22);
+            this.Grid_BrushSize.Text = "Brush Radius";
+            this.Grid_BrushSize.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.brushSizeToolStripMenuItem_DropDownItemClicked);
+            // 
+            // toolStripMenuItem23
+            // 
+            this.toolStripMenuItem23.Checked = true;
+            this.toolStripMenuItem23.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripMenuItem23.Name = "toolStripMenuItem23";
+            this.toolStripMenuItem23.Size = new System.Drawing.Size(80, 22);
+            this.toolStripMenuItem23.Text = "0";
+            // 
+            // toolStripMenuItem18
+            // 
+            this.toolStripMenuItem18.Name = "toolStripMenuItem18";
+            this.toolStripMenuItem18.Size = new System.Drawing.Size(80, 22);
+            this.toolStripMenuItem18.Text = "1";
+            // 
+            // toolStripMenuItem19
+            // 
+            this.toolStripMenuItem19.Name = "toolStripMenuItem19";
+            this.toolStripMenuItem19.Size = new System.Drawing.Size(80, 22);
+            this.toolStripMenuItem19.Text = "2";
+            // 
+            // toolStripMenuItem20
+            // 
+            this.toolStripMenuItem20.Name = "toolStripMenuItem20";
+            this.toolStripMenuItem20.Size = new System.Drawing.Size(80, 22);
+            this.toolStripMenuItem20.Text = "4";
+            // 
+            // toolStripMenuItem21
+            // 
+            this.toolStripMenuItem21.Name = "toolStripMenuItem21";
+            this.toolStripMenuItem21.Size = new System.Drawing.Size(80, 22);
+            this.toolStripMenuItem21.Text = "8";
+            // 
             // Menu_Seperator
             // 
             this.Menu_Seperator.Enabled = false;
@@ -534,6 +621,7 @@
             this.Menu_Seeding.Name = "Menu_Seeding";
             this.Menu_Seeding.Size = new System.Drawing.Size(101, 20);
             this.Menu_Seeding.Text = "Seed Algorithm";
+            this.Menu_Seeding.ToolTipText = "The algorithm used to intialize the current cellular automaton";
             this.Menu_Seeding.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.Menu_Seeding_DropDownItemClicked);
             // 
             // Menu_Rules
@@ -541,6 +629,8 @@
             this.Menu_Rules.Name = "Menu_Rules";
             this.Menu_Rules.Size = new System.Drawing.Size(107, 20);
             this.Menu_Rules.Text = "Simulation Rules";
+            this.Menu_Rules.ToolTipText = "The various rules which govern the current cellular automaton - one of which will" +
+    " be selected as the true result as according to the rule selection algorithm";
             this.Menu_Rules.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.Menu_Rules_DropDownItemClicked);
             // 
             // Menu_RuleSelection
@@ -548,6 +638,8 @@
             this.Menu_RuleSelection.Name = "Menu_RuleSelection";
             this.Menu_RuleSelection.Size = new System.Drawing.Size(150, 20);
             this.Menu_RuleSelection.Text = "Rule Selection Algorithm";
+            this.Menu_RuleSelection.ToolTipText = "The algorithm whic determines wich simulation rule will be accepted as the true r" +
+    "esult of this generation";
             this.Menu_RuleSelection.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.Menu_RuleSelection_DropDownItemClicked);
             // 
             // Menu_Neighbor
@@ -555,6 +647,8 @@
             this.Menu_Neighbor.Name = "Menu_Neighbor";
             this.Menu_Neighbor.Size = new System.Drawing.Size(126, 20);
             this.Menu_Neighbor.Text = "Neighbor Algorithm";
+            this.Menu_Neighbor.ToolTipText = "The algorithm which specifies which cells are considered \"neighbors\" to the cell " +
+    "in question";
             this.Menu_Neighbor.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.Menu_Neighbor_DropDownItemClicked);
             // 
             // Menu_Overflow
@@ -562,6 +656,8 @@
             this.Menu_Overflow.Name = "Menu_Overflow";
             this.Menu_Overflow.Size = new System.Drawing.Size(124, 20);
             this.Menu_Overflow.Text = "Overflow Algorithm";
+            this.Menu_Overflow.ToolTipText = "The algorithm that specifies what cell should be returned when asking for the sta" +
+    "te of a cell whose position is outside the grid";
             this.Menu_Overflow.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.Menu_Overflow_DropDownItemClicked);
             // 
             // UpdateTimer
@@ -572,7 +668,8 @@
             // 
             // OFD
             // 
-            this.OFD.Filter = "Automaton Simulation|*.automaton|All Files|*.*";
+            this.OFD.Filter = "Automaton Simulation|*.automaton|Buffered Automaton Simulation|*.bautomaton|All F" +
+    "iles|*.*";
             this.OFD.Title = "Open Automaton Simulation...";
             this.OFD.FileOk += new System.ComponentModel.CancelEventHandler(this.OFD_FileOk);
             // 
@@ -580,6 +677,7 @@
             // 
             this.SFD.Filter = "Automaton Simulation|*.automaton|All Files|*.*";
             this.SFD.Title = "Save Automaton Simulation...";
+            this.SFD.FileOk += new System.ComponentModel.CancelEventHandler(this.SFD_FileOk);
             // 
             // GridPanel
             // 
@@ -602,6 +700,7 @@
             this.Tabs.Size = new System.Drawing.Size(866, 514);
             this.Tabs.TabIndex = 2;
             this.Tabs.TabStop = false;
+            this.Tabs.TabIndexChanged += new System.EventHandler(this.Tabs_TabIndexChanged);
             // 
             // Tab_Grid
             // 
@@ -636,6 +735,7 @@
             this.AutomatonPG.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
             this.AutomatonPG.Size = new System.Drawing.Size(852, 482);
             this.AutomatonPG.TabIndex = 0;
+            this.AutomatonPG.TabStop = false;
             // 
             // Tab_Statistics
             // 
@@ -647,62 +747,6 @@
             this.Tab_Statistics.TabIndex = 2;
             this.Tab_Statistics.Text = "Statistics";
             this.Tab_Statistics.UseVisualStyleBackColor = true;
-            // 
-            // toolStripMenuItem17
-            // 
-            this.toolStripMenuItem17.Name = "toolStripMenuItem17";
-            this.toolStripMenuItem17.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem17.Text = "6";
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(152, 6);
-            // 
-            // Grid_BrushSize
-            // 
-            this.Grid_BrushSize.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem23,
-            this.toolStripMenuItem18,
-            this.toolStripMenuItem19,
-            this.toolStripMenuItem20,
-            this.toolStripMenuItem21});
-            this.Grid_BrushSize.Name = "Grid_BrushSize";
-            this.Grid_BrushSize.Size = new System.Drawing.Size(155, 22);
-            this.Grid_BrushSize.Text = "Brush Radius";
-            this.Grid_BrushSize.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.brushSizeToolStripMenuItem_DropDownItemClicked);
-            // 
-            // toolStripMenuItem18
-            // 
-            this.toolStripMenuItem18.Name = "toolStripMenuItem18";
-            this.toolStripMenuItem18.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem18.Text = "1";
-            // 
-            // toolStripMenuItem19
-            // 
-            this.toolStripMenuItem19.Name = "toolStripMenuItem19";
-            this.toolStripMenuItem19.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem19.Text = "2";
-            // 
-            // toolStripMenuItem20
-            // 
-            this.toolStripMenuItem20.Name = "toolStripMenuItem20";
-            this.toolStripMenuItem20.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem20.Text = "4";
-            // 
-            // toolStripMenuItem21
-            // 
-            this.toolStripMenuItem21.Name = "toolStripMenuItem21";
-            this.toolStripMenuItem21.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem21.Text = "8";
-            // 
-            // toolStripMenuItem23
-            // 
-            this.toolStripMenuItem23.Checked = true;
-            this.toolStripMenuItem23.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.toolStripMenuItem23.Name = "toolStripMenuItem23";
-            this.toolStripMenuItem23.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem23.Text = "0";
             // 
             // StatBox
             // 
@@ -730,8 +774,9 @@
             this.MainMenuStrip = this.MainMenu;
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Cellular Automata";
+            this.Text = "Cellular Automata - New Automaton";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.Load += new System.EventHandler(this.Main_Load);
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
@@ -823,6 +868,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem21;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem23;
         private System.Windows.Forms.TextBox StatBox;
+        private System.Windows.Forms.ToolStripMenuItem Simulation_GR1DCA;
+        private System.Windows.Forms.ToolStripTextBox Simulation_GR1DCA_Value;
+        private System.Windows.Forms.ToolStripMenuItem Options_RandE1DRules;
     }
 }
 

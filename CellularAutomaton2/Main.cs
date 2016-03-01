@@ -61,6 +61,7 @@ namespace CellularAutomaton
         public bool RandomizeRSOS = false;
         public bool RandomizeOverflowOS = false;
         public bool RandomizeGNSROS = false;
+        public bool RandomizeGR1DCA = false;
 
         public bool? MouseState = null;
 
@@ -338,7 +339,17 @@ namespace CellularAutomaton
 
         private void OFD_FileOk(object sender, CancelEventArgs e)
         {
-
+            if (OFD.FileName.EndsWith(".automaton"))
+            {
+                this.CurrentAutomaton = Serialization.DeserializeObject<Automaton>(OFD.FileName);
+                this.Text = "Cellular Automata - " + OFD.FileName;
+            }
+            else if (OFD.FileName.EndsWith(".bautomaton"))
+            {
+                BufferedViewer BV = new BufferedViewer(Serialization.DeserializeObject<BufferedAutomaton>(OFD.FileName));
+                BV.Text = "Buffered Automaton Viewer - " + OFD.FileName;
+                BV.Show();
+            }
         }
 
         private void Simulation_Start_Click(object sender, EventArgs e)
@@ -388,6 +399,13 @@ namespace CellularAutomaton
             }
 
             if (this.RandomizeGNSROS) RandomizeGNSR();
+
+            if (this.RandomizeGR1DCA)
+            {
+                int RN = Random.Integer(0, 255 - 1);
+                Algorithms.Option_Global1DElementaryRule = Algorithms.RuleIntegerTo1DElementaryRule(RN);
+                Simulation_GR1DCA_Value.Text = RN.ToString();
+            }
         }
 
         private void Simulation_Resume_Click(object sender, EventArgs e)
@@ -560,7 +578,12 @@ namespace CellularAutomaton
 
         private void File_New_Click(object sender, EventArgs e)
         {
-            InitializeNewAutomaton();
+            var Result = MessageBox.Show("Are you sure you want to create a new automaton? Any unsaved changes to the current automaton will be discarded...", "New Automaton...", MessageBoxButtons.YesNo);
+            if (Result == DialogResult.Yes)
+            {
+                this.Text = "Cellular Automata - New Automaton";
+                InitializeNewAutomaton();
+            }
         }
 
         /// <summary>
@@ -644,6 +667,9 @@ namespace CellularAutomaton
             StatBox.Text += "Seed           : " + Menu_Seeding.DropDownItems.Cast<ToolStripMenuItem>().Where(x => x.Checked).Select(x => x.Text).ToArray()[0].Replace("Seed_", "") + NL;
             StatBox.Text += "Overflow       : " + Menu_Overflow.DropDownItems.Cast<ToolStripMenuItem>().Where(x => x.Checked).Select(x => x.Text).ToArray()[0].Replace("Overflow_", "") + NL;
             StatBox.Text += "Search Radius  : " + Algorithms.Option_GlobalSearchRadius + NL;
+            StatBox.Text += NL + "ELEMENTARY ALGORITHM INFORMATION (if used)" + NL;
+            StatBox.Text += "Global 1D Rule Number : " + Simulation_GR1DCA_Value.Text + NL;
+            StatBox.Text += "Global 1D Rule        : {" + String.Join(", ", Algorithms.Option_Global1DElementaryRule.Select(x => x.ToString())) + "}" + NL;
             StatBox.Text += NL + "GRID STATISTICS" + NL;
             StatBox.Text += "Automaton Grid Size : " + A.Size + " x " + A.Size + NL;
             StatBox.Text += "Visible Grid Size   : " + Grid.GridSize.ToString("n1") + " x " + Grid.GridSize.ToString("n1") + NL;
@@ -874,6 +900,76 @@ namespace CellularAutomaton
                 ToolStripMenuItem I = item as ToolStripMenuItem;
                 if (I.Text == e.ClickedItem.Text) I.Checked = true;
                 else I.Checked = false;
+            }
+        }
+
+        private void Simulation_GR1DCA_Value_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                try
+                {
+                    int INT = Convert.ToInt32(Simulation_GR1DCA_Value.Text);
+                    if (INT > 255 || INT < 0) return;
+                    Algorithms.Option_Global1DElementaryRule = Algorithms.RuleIntegerTo1DElementaryRule(INT);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Unable to convert rule code to binary representation...", "Oops!", MessageBoxButtons.OK);
+                }
+            }
+        }
+
+        private void Tabs_TabIndexChanged(object sender, EventArgs e)
+        {
+            if (Tabs.SelectedTab == Tab_Grid)
+            {
+                this.GridPanel.Focus();
+                this.Grid.Focus();
+            }
+        }
+
+        private void Simulation_GR1DCA_Value_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Options_RandE1DRules_Click(object sender, EventArgs e)
+        {
+            Options_RandE1DRules.Checked = !Options_RandE1DRules.Checked;
+            this.RandomizeGR1DCA = Options_RandE1DRules.Checked;
+        }
+
+        private void File_Open_Click(object sender, EventArgs e)
+        {
+            var Result = MessageBox.Show("Are you sure you want to open a previously saved automaton? Any unsaved changes to the current automaton will be discarded...", "Open Automaton...", MessageBoxButtons.YesNo);
+            if (Result == DialogResult.Yes)
+            {
+                OFD.ShowDialog();
+            }
+        }
+
+        private void File_Save_Click(object sender, EventArgs e)
+        {
+            SFD.ShowDialog();
+        }
+
+        private void SFD_FileOk(object sender, CancelEventArgs e)
+        {
+            Serialization.SerializeObject<Automaton>(SFD.FileName, this.CurrentAutomaton);
+            MessageBox.Show("Current automaton simulation successfully written to file!", "Save Successful...", MessageBoxButtons.OK);
+            this.Text = "Cellular Automata - " + SFD.FileName;
+        }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing || e.CloseReason == CloseReason.ApplicationExitCall)
+            {
+                var Result = MessageBox.Show("Are you sure you want to close the program? Any unsaved changes to the current automaton will be discarded...", "Close Program...", MessageBoxButtons.YesNo);
+                if (Result == DialogResult.No)
+                {
+                    e.Cancel = true;
+                }
             }
         }
     }

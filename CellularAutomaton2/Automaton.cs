@@ -204,14 +204,21 @@ namespace CellularAutomaton
         {
             Cell[] NewGrid = new Cell[this.Size * this.Size];
 
-            Parallel.For(0, this.Grid.Length, i =>
+            try
             {
-                Cell Result = this.ApplyTo(this.Grid[i]);
-                lock (NewGrid)
+                Parallel.For(0, this.Grid.Length, i =>
                 {
-                    NewGrid[i] = Result;
-                }
-            });
+                    Cell Result = this.ApplyTo(this.Grid[i]);
+                    lock (NewGrid)
+                    {
+                        NewGrid[i] = Result;
+                    }
+                });
+            }
+            catch (Exception)
+            {
+                return;
+            }
 
             //for (int i = 0; i < this.Grid.Length; i++)
             //{

@@ -35,12 +35,15 @@
             this.Playback_Stop = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Playback_Loop = new System.Windows.Forms.ToolStripMenuItem();
-            this.TB = new System.Windows.Forms.TrackBar();
-            this.UpdateTimer = new System.Windows.Forms.Timer(this.components);
-            this.GridPanel = new System.Windows.Forms.Panel();
             this.Menu_Grid = new System.Windows.Forms.ToolStripMenuItem();
             this.Grid_HD = new System.Windows.Forms.ToolStripMenuItem();
             this.Grid_PM = new System.Windows.Forms.ToolStripMenuItem();
+            this.TB = new System.Windows.Forms.TrackBar();
+            this.UpdateTimer = new System.Windows.Forms.Timer(this.components);
+            this.GridPanel = new System.Windows.Forms.Panel();
+            this.Menu_File = new System.Windows.Forms.ToolStripMenuItem();
+            this.File_Save = new System.Windows.Forms.ToolStripMenuItem();
+            this.SFD = new System.Windows.Forms.SaveFileDialog();
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TB)).BeginInit();
             this.SuspendLayout();
@@ -48,6 +51,7 @@
             // MainMenu
             // 
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_File,
             this.Menu_Playback,
             this.Menu_Grid});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
@@ -93,6 +97,29 @@
             this.Playback_Loop.Text = "Loop";
             this.Playback_Loop.Click += new System.EventHandler(this.Playback_Loop_Click);
             // 
+            // Menu_Grid
+            // 
+            this.Menu_Grid.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Grid_HD,
+            this.Grid_PM});
+            this.Menu_Grid.Name = "Menu_Grid";
+            this.Menu_Grid.Size = new System.Drawing.Size(41, 20);
+            this.Menu_Grid.Text = "Grid";
+            // 
+            // Grid_HD
+            // 
+            this.Grid_HD.Name = "Grid_HD";
+            this.Grid_HD.Size = new System.Drawing.Size(155, 22);
+            this.Grid_HD.Text = "High Definition";
+            this.Grid_HD.Click += new System.EventHandler(this.Grid_HD_Click);
+            // 
+            // Grid_PM
+            // 
+            this.Grid_PM.Name = "Grid_PM";
+            this.Grid_PM.Size = new System.Drawing.Size(155, 22);
+            this.Grid_PM.Text = "Point Mode";
+            this.Grid_PM.Click += new System.EventHandler(this.Grid_PM_Click);
+            // 
             // TB
             // 
             this.TB.AutoSize = false;
@@ -122,28 +149,26 @@
             this.GridPanel.Size = new System.Drawing.Size(698, 445);
             this.GridPanel.TabIndex = 2;
             // 
-            // Menu_Grid
+            // Menu_File
             // 
-            this.Menu_Grid.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Grid_HD,
-            this.Grid_PM});
-            this.Menu_Grid.Name = "Menu_Grid";
-            this.Menu_Grid.Size = new System.Drawing.Size(41, 20);
-            this.Menu_Grid.Text = "Grid";
+            this.Menu_File.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.File_Save});
+            this.Menu_File.Name = "Menu_File";
+            this.Menu_File.Size = new System.Drawing.Size(37, 20);
+            this.Menu_File.Text = "File";
             // 
-            // Grid_HD
+            // File_Save
             // 
-            this.Grid_HD.Name = "Grid_HD";
-            this.Grid_HD.Size = new System.Drawing.Size(155, 22);
-            this.Grid_HD.Text = "High Definition";
-            this.Grid_HD.Click += new System.EventHandler(this.Grid_HD_Click);
+            this.File_Save.Name = "File_Save";
+            this.File_Save.Size = new System.Drawing.Size(152, 22);
+            this.File_Save.Text = "Save";
+            this.File_Save.Click += new System.EventHandler(this.File_Save_Click);
             // 
-            // Grid_PM
+            // SFD
             // 
-            this.Grid_PM.Name = "Grid_PM";
-            this.Grid_PM.Size = new System.Drawing.Size(155, 22);
-            this.Grid_PM.Text = "Point Mode";
-            this.Grid_PM.Click += new System.EventHandler(this.Grid_PM_Click);
+            this.SFD.Filter = "Buffered Automaton Simulation|*.bautomaton|All Files|*.*";
+            this.SFD.Title = "Save Buffered Automaton Simulation...";
+            this.SFD.FileOk += new System.ComponentModel.CancelEventHandler(this.SFD_FileOk);
             // 
             // BufferedViewer
             // 
@@ -182,5 +207,8 @@
         private System.Windows.Forms.ToolStripMenuItem Menu_Grid;
         private System.Windows.Forms.ToolStripMenuItem Grid_HD;
         private System.Windows.Forms.ToolStripMenuItem Grid_PM;
+        private System.Windows.Forms.ToolStripMenuItem Menu_File;
+        private System.Windows.Forms.ToolStripMenuItem File_Save;
+        private System.Windows.Forms.SaveFileDialog SFD;
     }
 }

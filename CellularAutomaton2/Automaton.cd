@@ -24,7 +24,7 @@
   <Class Name="CellularAutomaton.Algorithms">
     <Position X="6.25" Y="0.75" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAwAAAAAAAAAAACEAAAAgAAACAAAAAFJAAACACCCQ=</HashCode>
+      <HashCode>CAABxQAoIEhAEAAAiHAAAExkhSiSAKQYFBYAIGhiCWY=</HashCode>
       <FileName>Algorithms.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -36,7 +36,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CellularAutomaton.ChartArea">
-    <Position X="7" Y="6.5" Width="1.5" />
+    <Position X="9" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
       <FileName>ChartArea.cs</FileName>
@@ -52,15 +52,22 @@
   <Class Name="CellularAutomaton.Grid">
     <Position X="0.75" Y="5" Width="3" />
     <TypeIdentifier>
-      <HashCode>CRAAhIEAAIAAAEAAAAgAAAFCAgwgIAgAIAAAIgpABAE=</HashCode>
+      <HashCode>CRAAhIEAAKAAAEAAAAgAAAFCAgwgIAgAIABAIgpABAE=</HashCode>
       <FileName>Grid.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CellularAutomaton.BufferedAutomaton">
     <Position X="9.5" Y="0.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAABAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>BufferedAutomaton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CellularAutomaton.Serialization">
+    <Position X="12" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Serialization.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

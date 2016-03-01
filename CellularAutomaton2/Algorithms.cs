@@ -18,6 +18,11 @@ namespace CellularAutomaton
         public static int Option_GlobalSearchRadius = 1;
 
         /// <summary>
+        /// The global ruleset for classical 1D elementary automaton
+        /// </summary>
+        public static int[] Option_Global1DElementaryRule = new int[] { 0, 0, 0, 1, 1, 1, 1, 0 };
+
+        /// <summary>
         /// Returns a new random grid with all cells in states of 0 or 1
         /// </summary>
         [Description("Returns a new random grid with all cells in states of 0 or 1")]
@@ -134,6 +139,32 @@ namespace CellularAutomaton
                 int y = i / S;
                 int x = i % S;
                 if (x == 0 && y == 0)
+                {
+                    ReturnArray[i] = new Cell(1);
+                }
+                else
+                {
+                    ReturnArray[i] = new Cell(0);
+                }
+            }
+
+            return ReturnArray;
+        };
+
+
+        /// <summary>
+        /// Returns a new blank grid with the cell located at the top center initialized to 1
+        /// </summary>
+        [Description("Returns a new blank grid with the cell located at the top center initialized to 1")]
+        public static readonly Func<int, Cell[]> Seed_TopCenter = S =>
+        {
+            Cell[] ReturnArray = new Cell[S * S];
+
+            for (int i = 0; i < ReturnArray.Length; i++)
+            {
+                int y = i / S;
+                int x = i % S;
+                if (x == (S / 2) && y == S - 1)
                 {
                     ReturnArray[i] = new Cell(1);
                 }
@@ -902,6 +933,40 @@ namespace CellularAutomaton
         };
 
         /// <summary>
+        /// Represents a particular elementary cellular automata rule.
+        /// </summary>
+        [Description("Represents a particular 1D elementary cellular automata rule (requires at least 3 neighbors to take effect - one of which is the cell in question)")]
+        public static readonly Func<Cell, List<Cell>, Cell> Rule_Elementary1D_30 = (Input, Neighbors) =>
+        {
+            if (Neighbors.Count < 3) return new Cell(Input.State);
+            if (!Neighbors.Contains(Input)) return new Cell(Input.State);
+
+            int L = Neighbors.First(x => x.ID != Input.ID).State;
+            int M = Input.State;
+            int R = Neighbors.Last(x => x.ID != Input.ID).State;
+
+            int[] Rule = new int[] { 0, 0, 0, 1, 1, 1, 1, 0 };
+
+            return new Cell(ElementaryRule(L, M, R, Rule));
+        };
+
+        /// <summary>
+        /// Represents a particular elementary cellular automata rule.
+        /// </summary>
+        [Description("Represents a particular 1D elementary cellular automata rule based on the rule set in Option_Global1DElementaryRule (requires at least 3 neighbors to take effect - one of which is the cell in question)")]
+        public static readonly Func<Cell, List<Cell>, Cell> Rule_Elementary1D_Global = (Input, Neighbors) =>
+        {
+            if (Neighbors.Count < 3) return new Cell(Input.State);
+            if (!Neighbors.Contains(Input)) return new Cell(Input.State);
+
+            int L = Neighbors.First(x => x.ID != Input.ID).State;
+            int M = Input.State;
+            int R = Neighbors.Last(x => x.ID != Input.ID).State;
+
+            return new Cell(ElementaryRule(L, M, R, Option_Global1DElementaryRule));
+        };
+
+        /// <summary>
         /// Sets the state of the cell in question to 1 if the sum of its neighbor's states is an odd number.
         /// </summary>
         [Description("Sets the state of the cell in question to 1 if the sum of its neighbor's states is an odd number")]
@@ -1090,5 +1155,40 @@ namespace CellularAutomaton
         /// </summary>
         [Description("Returns a new cell with the average state value produced by the rule list (rounded)")]
         public static readonly Func<List<Cell>, Cell> RuleSelection_AverageState = (Results) => new Cell((int)Math.Round(Results.Average(c => c.State)));
+
+        /// <summary>
+        /// A static method for evaluating elementary cellular automata.
+        /// </summary>
+        /// <param name="L">The state of the "left" cell</param>
+        /// <param name="M">The state of the "middle" cell (cell in question)</param>
+        /// <param name="R">The state of the "right" cell</param>
+        /// <param name="ElementaryRule">The series of states corresponding to the elementary rule set</param>
+        public static int ElementaryRule(int L, int M, int R, int[] ElementaryRule)
+        {
+            if (L >= 1 && M >= 1 && R >= 1) return ElementaryRule[0];
+            else if (L >= 1 && M >= 1 && R == 0) return ElementaryRule[1];
+            else if (L >= 1 && M == 0 && R >= 1) return ElementaryRule[2];
+            else if (L >= 1 && M == 0 && R == 0) return ElementaryRule[3];
+            else if (L == 0 && M >= 1 && R >= 1) return ElementaryRule[4];
+            else if (L == 0 && M >= 1 && R == 0) return ElementaryRule[5];
+            else if (L == 0 && M == 0 && R >= 1) return ElementaryRule[6];
+            else return ElementaryRule[7];
+        }
+
+        /// <summary>
+        /// Converts a Wolfram rule code for a 1D cellular automaton to the ruleset it corresponds to.
+        /// </summary>
+        /// <param name="Rule">The integer value of the rule (for example, 30)</param>
+        public static int[] RuleIntegerTo1DElementaryRule(int Rule)
+        {
+            string BinaryString = Convert.ToString(Rule, 2);
+
+            while (BinaryString.Length < 8)
+            {
+                BinaryString = BinaryString.Insert(0, "0");
+            }
+
+            return BinaryString.Select(x => Int32.Parse(x.ToString())).ToArray();
+        }
     }
 }

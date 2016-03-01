@@ -143,5 +143,17 @@ namespace CellularAutomaton
                 this.Grid.Series.PointMode_OFF();
             }
         }
+
+        private void File_Save_Click(object sender, EventArgs e)
+        {
+            SFD.ShowDialog();
+        }
+
+        private void SFD_FileOk(object sender, CancelEventArgs e)
+        {
+            Serialization.SerializeObject<BufferedAutomaton>(SFD.FileName, this.B);
+            MessageBox.Show("Current buffered automaton successfully written to file!", "Save Successful...", MessageBoxButtons.OK);
+            this.Text = "Buffered Automaton Viewer - " + SFD.FileName;
+        }
     }
 }
