@@ -7,6 +7,7 @@ You need Microsoft Visual Studio 2015 (I assume an ealier version would work, bu
 ## Current Features
 * Integer-based cell states.
 * Lambda-based rule, rule selection, neighbor, seed, and boundary condition algorithms which are loaded at runtime.
+* Algorithmic support for 1D elementary cellular automata, specified via Wolfram numerical codes.
 * Ability to update cell states based on more than one automaton rule (the true result is then selected).
 * Parallel thread computation for faster iterations.
 * Ability to "buffer" an automaton for a particular number of generations and then play back the result.
@@ -20,7 +21,8 @@ You need Microsoft Visual Studio 2015 (I assume an ealier version would work, bu
 * Implementation of a "wavefunction"-based cell state for quantum cellular automata.
 
 ## Broken Features
-* At very rare instances, some algorithms will produce an integer overflow within a parallel loop. The culpret has not be caught yet >_>
+* At very rare instances, some algorithms will produce an integer overflow within a parallel loop. The culpret has not be caught yet >_> (UPDATE: The culpret still isn't caught, but a totally-not-lazily-and-well-implemented try-catch clause has been added to prevent crashing)
+* Sometimes input focus can be shifted away from the grid, causing some keyboard shortcuts to not work properly.
 
 ## Running
 When the program is started you will see a blank grid. Simply click "Simulation" > "Start (S)" to run a 10x10 automaton of Conway's Game of Life. The program will automatically seed your simulation with the selected seed algorithm when the start button is pressed if the automaton has not been yet been seeded. The rest of the options are pretty self-explanitory.
@@ -35,3 +37,11 @@ The following controls are at your disposal:
 * P - Toggle point mode (renders all cells at the same size regardless of zoom level for faster rendering)
 * A - Toggle grid axes
 * G - Toggle gridlines (when the axes are enabled)
+
+## Screenshots
+![Screenshot](http://i.imgur.com/FbEIM8d.png "Screenshot 1")
+![Screenshot](http://i.imgur.com/7Y2KhBq.png "Screenshot 2")
+![Screenshot](http://i.imgur.com/5jUiqhw.png "Screenshot 3")
+![Screenshot](http://i.imgur.com/OeQi0zv.png "Screenshot 4")
+![Screenshot](http://i.imgur.com/eoARyQa.png "Screenshot 5")
+![Screenshot](http://i.imgur.com/BS3MSGO.png "Screenshot 6")
