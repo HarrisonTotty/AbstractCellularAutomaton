@@ -15,6 +15,7 @@ You need Microsoft Visual Studio 2015 (I assume an ealier version would work, bu
 * Ability to randomize most features of an automaton at runtime for discovery of new combinations and patterns.
 * Ability to restart a simulation upon the "flatlining" of the current automaton (when up to four successive generations produce no change in cell states).
 * Runtime algorithm documentation based on C# attribute metadata.
+* Colorization of plotted cells according to state.
 
 ## Planned Features
 * Import C# files containing Func<> expressions at runtime for importing custom algorithms.
@@ -22,7 +23,7 @@ You need Microsoft Visual Studio 2015 (I assume an ealier version would work, bu
 
 ## Broken Features
 * At very rare instances, some algorithms will produce an integer overflow within a parallel loop. The culpret has not be caught yet >_> (UPDATE: The culpret still isn't caught, but a totally-not-lazily-and-well-implemented try-catch clause has been added to prevent crashing)
-* Sometimes input focus can be shifted away from the grid, causing some keyboard shortcuts to not work properly.
+* ~~Sometimes input focus can be shifted away from the grid, causing some keyboard shortcuts to not work properly.~~
 
 ## Running
 When the program is started you will see a blank grid. Simply click "Simulation" > "Start (S)" to run a 10x10 automaton of Conway's Game of Life. The program will automatically seed your simulation with the selected seed algorithm when the start button is pressed if the automaton has not been yet been seeded. The rest of the options are pretty self-explanitory.
