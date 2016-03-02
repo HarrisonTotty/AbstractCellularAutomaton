@@ -35,7 +35,7 @@ namespace CellularAutomaton
             //Attach the grid to the panel
             this.GridPanel.Controls.Add(this.Grid);
             this.Grid.Focus();
-            this.Grid.Series.PointMode_OFF();
+            this.Grid.Series[0].PointMode_OFF();
             this.S = B.GridEvolution[0].Length;
             this.TB.Maximum = B.GridEvolution.Length - 1;
             this.Grid.Origin = new double[] { S / 2, S / 2 };
@@ -136,11 +136,11 @@ namespace CellularAutomaton
             Grid_PM.Checked = !Grid_PM.Checked;
             if (Grid_PM.Checked)
             {
-                this.Grid.Series.PointMode_ON();
+                this.Grid.Series[0].PointMode_ON();
             }
             else
             {
-                this.Grid.Series.PointMode_OFF();
+                this.Grid.Series[0].PointMode_OFF();
             }
         }
 

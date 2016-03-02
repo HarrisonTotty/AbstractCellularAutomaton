@@ -121,11 +121,13 @@ namespace CellularAutomaton
             //Attach the grid to the panel
             this.GridPanel.Controls.Add(this.Grid);
             this.Grid.Focus();
-            this.Grid.Series.PointMode_OFF();
+            this.Grid.Series[0].PointMode_OFF();
             this.Grid.Origin = new double[] { 5, 5 };
 
             //Add the button event handlers for the grid
             this.Grid.KeyDown += Grid_KeyDown;
+            this.Tabs.KeyDown += Tabs_KeyDown;
+            this.Tabs.PreviewKeyDown += this.Grid.VisualizationGrid_PreviewKeyDown;
             this.Grid.MouseDown += Grid_MouseClick;
             this.Grid.MouseClick += Grid_MouseClick;
             this.Grid.MouseMove += Grid_MouseMove;
@@ -139,6 +141,12 @@ namespace CellularAutomaton
 
             //Selecte the current automation to view
             this.AutomatonPG.SelectedObject = this.CurrentAutomaton;
+        }
+
+        private void Tabs_KeyDown(object sender, KeyEventArgs e)
+        {
+            Grid_KeyDown(sender, e);
+            e.Handled = true;
         }
 
         private void Grid_MouseUp(object sender, MouseEventArgs e)
@@ -667,23 +675,33 @@ namespace CellularAutomaton
             StatBox.Text += "Seed           : " + Menu_Seeding.DropDownItems.Cast<ToolStripMenuItem>().Where(x => x.Checked).Select(x => x.Text).ToArray()[0].Replace("Seed_", "") + NL;
             StatBox.Text += "Overflow       : " + Menu_Overflow.DropDownItems.Cast<ToolStripMenuItem>().Where(x => x.Checked).Select(x => x.Text).ToArray()[0].Replace("Overflow_", "") + NL;
             StatBox.Text += "Search Radius  : " + Algorithms.Option_GlobalSearchRadius + NL;
-            StatBox.Text += NL + "ELEMENTARY ALGORITHM INFORMATION (if used)" + NL;
+            StatBox.Text += NL + "GLOBAL ELEMENTARY ALGORITHM INFORMATION" + NL;
+            StatBox.Text += "In Use?               : " + Menu_Rules.DropDownItems.Cast<ToolStripMenuItem>().Where(x => x.Text == "Rule_Elementary1D_Global").First().Checked.ToString() + NL;
             StatBox.Text += "Global 1D Rule Number : " + Simulation_GR1DCA_Value.Text + NL;
             StatBox.Text += "Global 1D Rule        : {" + String.Join(", ", Algorithms.Option_Global1DElementaryRule.Select(x => x.ToString())) + "}" + NL;
             StatBox.Text += NL + "GRID STATISTICS" + NL;
             StatBox.Text += "Automaton Grid Size : " + A.Size + " x " + A.Size + NL;
             StatBox.Text += "Visible Grid Size   : " + Grid.GridSize.ToString("n1") + " x " + Grid.GridSize.ToString("n1") + NL;
             StatBox.Text += "Total Grid Cells    : " + (A.Size * A.Size) + NL;
+            StatBox.Text += "Relative Origin     : " + this.Grid.Origin[0].ToString("n1") + ", " + this.Grid.Origin[1].ToString("n1") + NL;
             StatBox.Text += NL + "CELL STATISTICS" + NL;
-            StatBox.Text += "Generation    : " + this.CurrentGeneration + NL;
-            StatBox.Text += "Average State : " + A.Grid.Average(x => x.State).ToString("n4") + NL;
-            StatBox.Text += "Minimum State : " + A.Grid.Min(x => x.State) + NL;
-            StatBox.Text += "Maximum State : " + A.Grid.Max(x => x.State) + NL;
+            StatBox.Text += "Generation         : " + this.CurrentGeneration + NL;
+            StatBox.Text += "Mean State         : " + A.Grid.Average(x => x.State).ToString("n4") + NL;
+            StatBox.Text += "Standard Deviation : " + Math.Sqrt(A.Grid.Average(z => z.State * z.State) - Math.Pow(A.Grid.Average(z => z.State), 2)).ToString("n4") + NL;
+            StatBox.Text += "Minimum State      : " + A.Grid.Min(x => x.State) + NL;
+            StatBox.Text += "Maximum State      : " + A.Grid.Max(x => x.State) + NL;
             StatBox.Text += NL + "COMPUTATION STATISTICS" + NL;
             StatBox.Text += "Memory Usage       : " + (((double)ME.PrivateMemorySize64 / 1024) / 1024).ToString("n2") + " MB" + NL;
             StatBox.Text += "Peak Memory Usage  : " + (((double)ME.PeakWorkingSet64 / 1024) / 1024).ToString("n2") + " MB" + NL;
             StatBox.Text += "Total Threads      : " + ME.Threads.Count + NL;
             StatBox.Text += "Priority           : " + ME.PriorityClass + NL;
+            StatBox.Text += NL + "STATE GRID COLORATION" + NL;
+            StatBox.Text += "0\t->\tNOT VISIBLE" + NL;
+            for (int i = 0; i < Grid.StateColors.Length - 1; i++)
+            {
+                StatBox.Text += (i + 1) + "\t->\t" + Grid.StateColors[i].Name + NL;
+            }
+            StatBox.Text += Grid.StateColors.Length + "+\t->\t" + Grid.StateColors[Grid.StateColors.Length - 1].Name + NL;
         }
 
         private void Grid_HD_Click(object sender, EventArgs e)
@@ -695,8 +713,8 @@ namespace CellularAutomaton
         private void Grid_PM_Click(object sender, EventArgs e)
         {
             Grid_PM.Checked = !Grid_PM.Checked;
-            if (Grid_PM.Checked) this.Grid.Series.PointMode_ON();
-            else this.Grid.Series.PointMode_OFF();
+            if (Grid_PM.Checked) this.Grid.Series[0].PointMode_ON();
+            else this.Grid.Series[0].PointMode_OFF();
         }
 
         private void Menu_Overflow_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -922,11 +940,8 @@ namespace CellularAutomaton
 
         private void Tabs_TabIndexChanged(object sender, EventArgs e)
         {
-            if (Tabs.SelectedTab == Tab_Grid)
-            {
-                this.GridPanel.Focus();
-                this.Grid.Focus();
-            }
+            this.GridPanel.Focus();
+            this.Grid.Focus();
         }
 
         private void Simulation_GR1DCA_Value_Click(object sender, EventArgs e)

@@ -1037,6 +1037,12 @@ namespace CellularAutomaton
         public static readonly Func<int[], Automaton, Cell> Overflow_Assume1 = (Position, Automaton) => new Cell(1);
 
         /// <summary>
+        /// An overflow handler that assumes that outside of our grid exists cells whose state is equal to the average state of the automaton.
+        /// </summary>
+        [Description("Assumes that outside of our grid exists cells whose state is equal to the average state of the automaton")]
+        public static readonly Func<int[], Automaton, Cell> Overflow_AssumeAverage = (Position, Automaton) => new Cell((int)Math.Round(Automaton.Grid.Average(x => x.State)));
+
+        /// <summary>
         /// An overflow handler that assumes that outside of our grid exists cells whose state is randomly either 0 or 1.
         /// </summary>
         [Description("Assumes that outside of our grid exists cells whose state is randomly either 0 or 1")]

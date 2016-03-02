@@ -80,7 +80,7 @@ namespace CellularAutomaton
         //    }
         //}
 
-        public static Color[] StateColors = new Color[] { SystemColors.Desktop, Color.LightBlue, Color.Cyan, Color.Green, Color.GreenYellow, Color.Yellow, Color.Orange, Color.OrangeRed, Color.Red, Color.Magenta };
+        public static Color[] StateColors = new Color[] { Color.Black, Color.Purple, Color.Violet, Color.Blue, SystemColors.Desktop, Color.LightBlue, Color.Cyan, Color.Green, Color.GreenYellow, Color.Yellow, Color.Orange, Color.OrangeRed, Color.Red, Color.DarkRed };
 
         /// <summary>
         /// If set to true, the grid will pan (or rotate around the origin if in 3D mode) when the user clicks and drags the mouse.
@@ -161,8 +161,13 @@ namespace CellularAutomaton
             this.Titles.Add(new Title("Generation 0"));
             base.Series.Add(new Series());
             this.ChartAreas.Add(new ChartArea());
-            this.Series.ChartArea = this.ChartArea.Name;
+            this.Series[0].ChartArea = this.ChartArea.Name;
 
+            //Add additional series
+            for (int i = 0; i < StateColors.Length; i++)
+            {
+                base.Series.Add(new Series() { Color = StateColors[i], ChartArea = this.ChartArea.Name });
+            }
 
             //SETUP CUSTOM SETTINGS
             //this.XIndex = 0;
@@ -421,20 +426,14 @@ namespace CellularAutomaton
         //}
 
         /// <summary>
-        /// Gets or sets the primary series used by this visualization grid.
+        /// Gets or sets the series used by this visualization grid.
         /// </summary>
-        public new Series Series
+        public new Series[] Series
         {
             get
             {
-                if (base.Series != null && base.Series.Count > 0) return base.Series[0] as Series;
+                if (base.Series != null && base.Series.Count > 0) return base.Series.Cast<Series>().ToArray();
                 else return null;
-            }
-
-            set
-            {
-                if (base.Series != null && base.Series.Count > 0) base.Series[0] = value;
-                else base.Series.Add(value);
             }
         }
 
@@ -605,7 +604,7 @@ namespace CellularAutomaton
         /// <summary>
         /// Handles various key presses.
         /// </summary>
-        void VisualizationGrid_PreviewKeyDown(object sender, System.Windows.Forms.PreviewKeyDownEventArgs e)
+        public void VisualizationGrid_PreviewKeyDown(object sender, System.Windows.Forms.PreviewKeyDownEventArgs e)
         {
             //this.Handle3DButtonPress(e.KeyData);
             switch (e.KeyData)
@@ -622,13 +621,13 @@ namespace CellularAutomaton
 
                 //Toggle point mode
                 case System.Windows.Forms.Keys.P:
-                    if (this.Series.PointMode)
+                    if (this.Series[0].PointMode)
                     {
-                        this.Series.PointMode_OFF();
+                        this.Series.AsParallel().ForAll(x => x.PointMode_OFF());
                     }
                     else
                     {
-                        this.Series.PointMode_ON();
+                        this.Series.AsParallel().ForAll(x => x.PointMode_ON());
                     }
                     break;
 
@@ -994,13 +993,17 @@ namespace CellularAutomaton
         public void PlotAutomaton(Automaton Automaton)
         {
             //Clear the top list of particles
-            this.Series.Points.Clear();
+            this.Series.ToList().ForEach(x => x.Points.Clear());
 
-            //Store all of the DataPoints
-            List<DataPoint> PointList = new List<DataPoint>();
+            //Create a list of points, sorted by series
+            List<List<DataPoint>> Points = new List<List<DataPoint>>(this.Series.Length);
+            for (int i = 0; i < Points.Capacity; i++)
+            {
+                Points.Add(new List<DataPoint>());
+            }
 
             //If we are in point mode:
-            if (this.Series.PointMode)
+            if (this.Series[0].PointMode)
             {
                 //For each particle:
                 Parallel.ForEach(Automaton.Grid, C =>
@@ -1011,10 +1014,18 @@ namespace CellularAutomaton
                         //We don't care about size
                         double[] Position = Automaton[C].Select(x => (double)x).ToArray();
 
-                        DataPoint newpoint = new DataPoint(Position[0], Position[1], this.Series.MarkerSize);
-                        lock (PointList)
+                        DataPoint newpoint = new DataPoint(Position[0], Position[1], this.Series[0].MarkerSize);
+
+                        lock (Points)
                         {
-                            PointList.Add(newpoint);
+                            if (C.State < Points.Capacity)
+                            {
+                                Points[C.State - 1].Add(newpoint);
+                            }
+                            else
+                            {
+                                Points[Points.Capacity - 1].Add(newpoint);
+                            }
                         }
                     }
                 });
@@ -1032,19 +1043,38 @@ namespace CellularAutomaton
                         int MarkerSize = RadiusToMarkerSize_2D(0.5);
 
                         DataPoint newpoint = new DataPoint(Position[0], Position[1], MarkerSize);
-                        lock (PointList)
+
+                        lock (Points)
                         {
-                            PointList.Add(newpoint);
+                            if (C.State < Points.Capacity)
+                            {
+                                Points[C.State - 1].Add(newpoint);
+                            }
+                            else
+                            {
+                                Points[Points.Capacity - 1].Add(newpoint);
+                            }
                         }
                     }
                 });
-
             }
 
-            foreach (DataPoint x in PointList)
+            //Add the points
+            for (int i = 0; i < Points.Capacity; i++)
             {
-                this.Series.Points.Add(x);
+                Points[i].TrimExcess();
+                for (int j = 0; j < Points[i].Count; j++)
+                {
+                    base.Series[i].Points.Add(Points[i][j]);
+                }
             }
+
+            ////Colorize the grid
+            //for (int i = 0; i < this.Series.Length; i++)
+            //{
+            //    if (i < StateColors.Length) this.Series[i].Color = StateColors[i];
+            //    else this.Series[i].Color = StateColors[StateColors.Length - 1];
+            //}
         }
 
         /// <summary>
@@ -1069,7 +1099,7 @@ namespace CellularAutomaton
         public void PlotBuffered(BufferedAutomaton B, int Generation)
         {
             //Clear the top list of particles
-            this.Series.Points.Clear();
+            this.Series.ToList().ForEach(x => x.Points.Clear());
 
             //Get the grid for this generation
             Cell[][] G = B[Generation];
@@ -1078,7 +1108,7 @@ namespace CellularAutomaton
             List<DataPoint> PointList = new List<DataPoint>();
 
             //If we are in point mode:
-            if (this.Series.PointMode)
+            if (this.Series[0].PointMode)
             {
                 //For each row:
                 Parallel.For(0, G.Length, R =>
@@ -1088,7 +1118,7 @@ namespace CellularAutomaton
                         //We don't care about cells with state 0
                         if (G[R][C].State != 0)
                         {
-                            DataPoint newpoint = new DataPoint(R, C, this.Series.MarkerSize);
+                            DataPoint newpoint = new DataPoint(R, C, this.Series[0].MarkerSize);
                             lock (PointList)
                             {
                                 PointList.Add(newpoint);
@@ -1130,7 +1160,7 @@ namespace CellularAutomaton
 
             foreach (DataPoint x in PointList)
             {
-                this.Series.Points.Add(x);
+                this.Series[0].Points.Add(x);
             }
         }
     }

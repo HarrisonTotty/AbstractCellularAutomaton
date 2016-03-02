@@ -10,7 +10,7 @@ namespace CellularAutomaton
         /// <summary>
         /// Creates a new series to hold data points.
         /// </summary>
-        public Series() : base("PrimarySeries")
+        public Series()
         {
             this.XAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Primary;
             this.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Primary;

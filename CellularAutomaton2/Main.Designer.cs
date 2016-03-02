@@ -108,6 +108,7 @@
             this.AutomatonPG = new System.Windows.Forms.PropertyGrid();
             this.Tab_Statistics = new System.Windows.Forms.TabPage();
             this.StatBox = new System.Windows.Forms.TextBox();
+            this.Tab_TimeGraph = new System.Windows.Forms.TabPage();
             this.MainMenu.SuspendLayout();
             this.Tabs.SuspendLayout();
             this.Tab_Grid.SuspendLayout();
@@ -150,33 +151,33 @@
             // File_New
             // 
             this.File_New.Name = "File_New";
-            this.File_New.Size = new System.Drawing.Size(152, 22);
+            this.File_New.Size = new System.Drawing.Size(103, 22);
             this.File_New.Text = "New";
             this.File_New.Click += new System.EventHandler(this.File_New_Click);
             // 
             // File_Open
             // 
             this.File_Open.Name = "File_Open";
-            this.File_Open.Size = new System.Drawing.Size(152, 22);
+            this.File_Open.Size = new System.Drawing.Size(103, 22);
             this.File_Open.Text = "Open";
             this.File_Open.Click += new System.EventHandler(this.File_Open_Click);
             // 
             // File_Save
             // 
             this.File_Save.Name = "File_Save";
-            this.File_Save.Size = new System.Drawing.Size(152, 22);
+            this.File_Save.Size = new System.Drawing.Size(103, 22);
             this.File_Save.Text = "Save";
             this.File_Save.Click += new System.EventHandler(this.File_Save_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(100, 6);
             // 
             // File_Exit
             // 
             this.File_Exit.Name = "File_Exit";
-            this.File_Exit.Size = new System.Drawing.Size(152, 22);
+            this.File_Exit.Size = new System.Drawing.Size(103, 22);
             this.File_Exit.Text = "Exit";
             this.File_Exit.Click += new System.EventHandler(this.File_Exit_Click);
             // 
@@ -693,6 +694,7 @@
             this.Tabs.Controls.Add(this.Tab_Grid);
             this.Tabs.Controls.Add(this.Tab_Info);
             this.Tabs.Controls.Add(this.Tab_Statistics);
+            this.Tabs.Controls.Add(this.Tab_TimeGraph);
             this.Tabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Tabs.Location = new System.Drawing.Point(0, 24);
             this.Tabs.Name = "Tabs";
@@ -736,6 +738,7 @@
             this.AutomatonPG.Size = new System.Drawing.Size(852, 482);
             this.AutomatonPG.TabIndex = 0;
             this.AutomatonPG.TabStop = false;
+            this.AutomatonPG.ToolbarVisible = false;
             // 
             // Tab_Statistics
             // 
@@ -750,6 +753,8 @@
             // 
             // StatBox
             // 
+            this.StatBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.StatBox.CausesValidation = false;
             this.StatBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.StatBox.Font = new System.Drawing.Font("Courier New", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StatBox.Location = new System.Drawing.Point(3, 3);
@@ -757,11 +762,22 @@
             this.StatBox.Name = "StatBox";
             this.StatBox.ReadOnly = true;
             this.StatBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.StatBox.ShortcutsEnabled = false;
             this.StatBox.Size = new System.Drawing.Size(852, 482);
             this.StatBox.TabIndex = 0;
             this.StatBox.TabStop = false;
             this.StatBox.Text = "Ready...";
             this.StatBox.WordWrap = false;
+            // 
+            // Tab_TimeGraph
+            // 
+            this.Tab_TimeGraph.Location = new System.Drawing.Point(4, 22);
+            this.Tab_TimeGraph.Name = "Tab_TimeGraph";
+            this.Tab_TimeGraph.Padding = new System.Windows.Forms.Padding(3);
+            this.Tab_TimeGraph.Size = new System.Drawing.Size(858, 488);
+            this.Tab_TimeGraph.TabIndex = 3;
+            this.Tab_TimeGraph.Text = "Time Graph";
+            this.Tab_TimeGraph.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
@@ -871,6 +887,7 @@
         private System.Windows.Forms.ToolStripMenuItem Simulation_GR1DCA;
         private System.Windows.Forms.ToolStripTextBox Simulation_GR1DCA_Value;
         private System.Windows.Forms.ToolStripMenuItem Options_RandE1DRules;
+        private System.Windows.Forms.TabPage Tab_TimeGraph;
     }
 }
 
