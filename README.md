@@ -20,6 +20,7 @@ You need Microsoft Visual Studio 2015 (I assume an ealier version would work, bu
 ## Planned Features
 * Import C# files containing Func<> expressions at runtime for importing custom algorithms.
 * Implementation of a "wavefunction"-based cell state for quantum cellular automata.
+* Ability to plot some statistic of the current automaton over time (the average cell state, for example).
 
 ## Broken Features
 * At very rare instances, some algorithms will produce an integer overflow within a parallel loop. The culpret has not be caught yet >_> (UPDATE: The culpret still isn't caught, but a totally-not-lazily-and-well-implemented try-catch clause has been added to prevent crashing)
